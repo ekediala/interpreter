@@ -112,7 +112,7 @@ if (5 < 10) {
 	l := lexer.New(source)
 
 	for i, tt := range tests {
-		tok := l.ReadToken()
+		tok := l.ReadAndAdvanceToken()
 
 		if tok.Type != tt.expectedType {
 			t.Fatalf("test[%d] - tokentype wrong, expected=%q, got=%q", i, tt.expectedType, tok.Type)

@@ -24,7 +24,7 @@ func (l *Lexer) ReadNextChar() {
 }
 
 // Returns current token and advances the cursor
-func (l *Lexer) ReadToken() token.Token {
+func (l *Lexer) ReadAndAdvanceToken() token.Token {
 	var tok token.Token
 
 	l.skipWhitespace()
