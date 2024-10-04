@@ -1,6 +1,10 @@
 package ast
 
-import "github.com/ekediala/interpreter/token"
+import (
+	"strings"
+
+	"github.com/ekediala/interpreter/token"
+)
 
 type LetStatement struct {
 	Token token.Token // token.let
@@ -14,15 +18,18 @@ func (l *LetStatement) TokenLiteral() string {
 	return l.Token.Literal
 }
 
-type Identifier struct {
-	Token token.Token // token.identifier
-	Value string
-}
+func (l *LetStatement) String() string {
+	var out strings.Builder
 
-func (i *Identifier) TokenLiteral() string {
-	return i.Token.Literal
-}
+	out.WriteString(l.TokenLiteral() + " ")
+	out.WriteString(l.Name.String())
+	out.WriteString(" = ")
 
-// sometimes identifiers do produce values
-// say we have let x = 5; let y = x; the identifier x here does produce a value
-func (i *Identifier) expressionNode() {}
+	if l.Value != nil {
+		out.WriteString(l.Value.String())
+	}
+
+	out.WriteString(";")
+
+	return out.String()
+}

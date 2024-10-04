@@ -1,7 +1,10 @@
 package ast
 
+import "strings"
+
 type Node interface {
 	TokenLiteral() string
+	String() string
 }
 
 type Statement interface {
@@ -19,10 +22,20 @@ type RootNode struct {
 	Statements []Statement
 }
 
-func (p *RootNode) TokenLiteral() string {
-	if len(p.Statements) > 0 {
-		return p.Statements[0].TokenLiteral()
+func (r *RootNode) TokenLiteral() string {
+	if len(r.Statements) > 0 {
+		return r.Statements[0].TokenLiteral()
 	}
 
 	return ""
+}
+
+func (r *RootNode) String() string {
+	var out strings.Builder
+
+	for _, stmt := range r.Statements {
+		out.WriteString(stmt.String())
+	}
+
+	return out.String()
 }
